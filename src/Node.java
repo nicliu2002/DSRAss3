@@ -32,11 +32,18 @@ class Node implements NodeInteface {
         adj = new HashMap<>();
     }
 
+    @Override
+    public int hashCode()
+    { //we can revise this later but for now F(i) = i
+        return(this.id);
+    }
+
     /**
      * Construct a new vertex in the graph with the supplied id, name, DOB and
      * suburb.
      *
      */
+
 
 
     @Override
