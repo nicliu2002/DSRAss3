@@ -106,7 +106,6 @@ public class HarnessClass {
         // then edges between them
         try {
             g.addEdge(v0, v1);
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -73,14 +73,16 @@ class Node implements NodeInteface {
     @Override
     public String toString()
     {
-        return "Node {id = , " + id + " , name = " + name + " , DOB = " + dateOB + " , suburb = " + suburb + "}";
+        return "Node {id = " + id + " , name = " + name + " , DOB = " + dateOB + " , suburb = " + suburb + "}";
+    }
+
+    public HashMap<Integer, Edge> getAdj() {
+        return adj;
     }
 
     public static void main (String args[])
     {
         Node node = new Node(2, "Bob", LocalDate.parse("2022-02-23"), "Deakin" );
         System.out.println(node.toString());
-
-
     }
 }
