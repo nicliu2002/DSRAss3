@@ -1,5 +1,5 @@
 
-import java.time.LocalDate;
+import java.time.*;
 import java.util.HashMap;
 
 /**
@@ -8,7 +8,7 @@ import java.util.HashMap;
  * @version 2.0, April 2022
  * @author Saber Elsayed
  */
-class Node implements NodeInteface {
+class Node implements NodeInteface,Comparable<Node>  {
 
     //id
     private Integer id;
@@ -78,6 +78,24 @@ class Node implements NodeInteface {
 
     public HashMap<Integer, Edge> getAdj() {
         return adj;
+    }
+
+    @Override
+    public int compareTo(Node other){
+        LocalDate today = LocalDate.now();
+        LocalDate thisBirthday = this.dateOB;
+        LocalDate thisNextBDay = thisBirthday.withYear(today.getYear());
+        if (thisNextBDay.isBefore(today) || thisNextBDay.isEqual(today)) {
+            thisNextBDay = thisNextBDay.plusYears(1);
+        }
+        Duration thisD = Duration.between(today, thisNextBDay);
+        LocalDate otherBirthday = this.dateOB;
+        LocalDate otherNextBDay = otherBirthday.withYear(today.getYear());
+        if (otherNextBDay.isBefore(today) || otherNextBDay.isEqual(today)) {
+            otherNextBDay = otherNextBDay.plusYears(1);
+        }
+        Duration otherD = Duration.between(today, otherNextBDay);
+        return thisD.compareTo(otherD)*-1;
     }
 
     public static void main (String args[])

@@ -1,10 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 /**
  * represents accounts and their relationship as a graph; 
@@ -71,8 +69,24 @@ public class SocialNetwork implements SocialNetworkInterface {
 
     @Override
     public String remindBDEvents(Node currentPerson) {
-
-        return null;
+        Queue<Node> queue = new PriorityQueue<>();
+        StringBuilder out = new StringBuilder();
+        LocalDate today = LocalDate.now();
+        out.append("Hey ").append(currentPerson.getName()).append(": \n");
+        for (Edge i : sn.getNeighbors(currentPerson)) { //gets all the friends of x
+            Node friend = i.getFriend();
+            queue.add(friend);
+        }
+        for (Node person : queue){
+            LocalDate birthday = person.getDateOB();
+            LocalDate nextBDay = birthday.withYear(today.getYear());
+            if (nextBDay.isBefore(today) || nextBDay.isEqual(today)) {
+                nextBDay = nextBDay.plusYears(1);
+            }
+            Period p = Period.between(today, nextBDay);
+            out.append(person.getName()).append(" has their birthday in ").append(p.getMonths()).append(" months, and ").append(p.getDays()).append(" days until their next birthday. \n");
+        }
+        return out.toString();
     }
 
     @Override
