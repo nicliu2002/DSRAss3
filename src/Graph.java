@@ -42,9 +42,17 @@ public class Graph implements GraphInterface {
     @Override
     public void addEdge(Node from, Node to) {
         Edge e = new Edge(to);
-        from.adj.put(to.hashCode(),e);  // from ---> to
+        if(!from.adj.containsValue(e)){
+            from.adj.put(to.hashCode(),e);  // from ---> to
+        } else {
+            throw new IllegalArgumentException("edge exists already");
+        }
         e = new Edge(from);
-        to.adj.put(from.hashCode(),e);   // from <--- to
+        if (!to.adj.containsValue(e)){
+            to.adj.put(from.hashCode(),e);   // from <--- to
+        } else {
+            throw new IllegalArgumentException("edge exists already");
+        }
     }
 
     @Override

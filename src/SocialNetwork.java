@@ -34,12 +34,12 @@ public class SocialNetwork implements SocialNetworkInterface {
 
     @Override
     public void processFile() {
-        try {
+        try { //processing file needs to have a try-catch
             File myFile = new File("data.txt");
             Scanner sc = new Scanner(myFile);
             while (sc.hasNextLine()){
                 String data = sc.nextLine();
-                String[] splitData = data.split("\t|,|\\s"); //index 0-3 profile data, index 4 onwards is friends data
+                String[] splitData = data.split("\t|,|\\s"); //index 0-3 profile data, index 4 onwards is friends data (friend IDs)
                 sn.addNode(Integer.parseInt(splitData[0]), splitData[1], LocalDate.parse(splitData[2]), splitData[3]);
                 for(int i = 4; i< splitData.length; i++){
                     sn.addEdge(sn.getNodeFromID(Integer.parseInt(splitData[0])),sn.getNodeFromID(Integer.parseInt(splitData[i])));
@@ -90,7 +90,7 @@ public class SocialNetwork implements SocialNetworkInterface {
     }
 
     @Override
-    public List<String> getMutualFriends(Node x, Node y) {
+    public List<String> getMutualFriends(Node x, Node y) { //could be sped up with hashcodes (like fucking minimally, just we can change it if its slow)
         Set<String> mutualFriends = new HashSet<>(); //stops double friend suggestions
         for (Edge i : sn.getNeighbors(x)) { //gets all the friends of x
             Node friend1 = i.getFriend();

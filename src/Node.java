@@ -86,7 +86,7 @@ class Node implements NodeInteface,Comparable<Node>
             otherNextBDay = otherNextBDay.plusYears(1);
         }
         Duration otherD = Duration.between(today, otherNextBDay);
-        return thisD.compareTo(otherD) * -1;
+        return thisD.compareTo(otherD) * -1; //if you test it, and it goes from furthest away to closest just delete -1
     }
 
 
