@@ -80,7 +80,7 @@ class Node implements NodeInteface,Comparable<Node>
             thisNextBDay = thisNextBDay.plusYears(1);
         }
         Duration thisD = Duration.between(today, thisNextBDay);
-        LocalDate otherBirthday = this.dateOB;
+        LocalDate otherBirthday = other.dateOB;
         LocalDate otherNextBDay = otherBirthday.withYear(today.getYear());
         if (otherNextBDay.isBefore(today) || otherNextBDay.isEqual(today)) {
             otherNextBDay = otherNextBDay.plusYears(1);
