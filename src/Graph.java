@@ -32,7 +32,8 @@ public class Graph implements GraphInterface {
     }
 
     @Override
-    public Node addNode(Integer id, String name, LocalDate dob, String suburb) {
+    public Node addNode(Integer id, String name, LocalDate dob, String suburb)
+    {
         Node newNode = new Node(id, name, dob, suburb);
         nodeList.put(newNode.hashCode(), newNode); //we will implement some form of hashCode function later, rn it just pulls ID
         return newNode;

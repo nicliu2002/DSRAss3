@@ -1,6 +1,9 @@
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.*;
 import java.util.HashMap;
+import java.util.Scanner;
 
 /**
  * Represents a vertex in the graph with its adjacency list of edges.
@@ -8,7 +11,8 @@ import java.util.HashMap;
  * @version 2.0, April 2022
  * @author Saber Elsayed
  */
-class Node implements NodeInteface,Comparable<Node>  {
+class Node implements NodeInteface,Comparable<Node>
+{
 
     //id
     private Integer id;
@@ -32,47 +36,34 @@ class Node implements NodeInteface,Comparable<Node>  {
         adj = new HashMap<>();
     }
 
-    @Override
-    public int hashCode()
-    { //we can revise this later but for now F(i) = i
-        return(this.id);
-    }
-
     /**
      * Construct a new vertex in the graph with the supplied id, name, DOB and
      * suburb.
-     *
      */
 
 
-
     @Override
-    public Integer getId()
-    {
+    public Integer getId() {
         return id;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
     @Override
-    public String getSuburb()
-    {
+    public String getSuburb() {
         return suburb;
     }
 
     @Override
-    public LocalDate getDateOB()
-    {
+    public LocalDate getDateOB() {
         return dateOB;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Node {id = " + id + " , name = " + name + " , DOB = " + dateOB + " , suburb = " + suburb + "}";
     }
 
@@ -81,7 +72,7 @@ class Node implements NodeInteface,Comparable<Node>  {
     }
 
     @Override
-    public int compareTo(Node other){
+    public int compareTo(Node other) {
         LocalDate today = LocalDate.now();
         LocalDate thisBirthday = this.dateOB;
         LocalDate thisNextBDay = thisBirthday.withYear(today.getYear());
@@ -95,12 +86,79 @@ class Node implements NodeInteface,Comparable<Node>  {
             otherNextBDay = otherNextBDay.plusYears(1);
         }
         Duration otherD = Duration.between(today, otherNextBDay);
-        return thisD.compareTo(otherD)*-1;
+        return thisD.compareTo(otherD) * -1;
     }
 
-    public static void main (String args[])
-    {
-        Node node = new Node(2, "Bob", LocalDate.parse("2022-02-23"), "Deakin" );
-        System.out.println(node.toString());
+
+    /**
+     * overrides a hash code value for the object. This method is supported for
+     * the benefit of hash tables such as those provided by HashMap.
+     *
+     * @return hash code value for a Node object
+     */
+
+    @Override
+    public int hashCode() {
+        id = getId();
+        int hash = (id ^ 2) % 42061;
+        return hash;
+
+        // get index into the table
+        // reduce collisions and make it fast
+        //getId();   // gets unique ID
+        //id% 1003 // collison 2 0-1002 size of table     // using just ID wasting a bit of memory
+        // insert one by one into a set
+        // check size of set against hashmap
+        // unique for each
     }
-}
+
+    @Override
+    /**
+     * Indicates whether another object is "equal to" this one or not
+     *
+     * @param obj - the reference object with which to compare.
+     * @return true if this object is the same as the obj argument; false
+     * otherwise.
+     */
+
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Node other = (Node) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+
+    public static void main(String args[])
+    {
+        Node node = new Node(2, "Bob", LocalDate.parse("2022-02-23"), "Deakin");
+        System.out.println(node.toString());
+
+        /*
+        File myFile = new File("data.txt");
+        Scanner sc = null;
+        try {
+            sc = new Scanner(myFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        while (sc.hasNextLine()) {
+            String data = sc.nextLine();
+            String[] splitData = data.split("\t|,|\\s"); //index 0-3 profile data, index 4 onwards is friends data
+            for (String[1])
+
+         */
+        }
+    }
+
+
