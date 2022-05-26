@@ -39,7 +39,7 @@ public class SocialNetwork implements SocialNetworkInterface {
             Scanner sc = new Scanner(myFile);
             while (sc.hasNextLine()){
                 String data = sc.nextLine();
-                String[] splitData = data.split("\t|,|\\s"); //index 0-3 profile data, index 4 onwards is friends data (friend IDs)
+                String[] splitData = data.split("\t|,"); //index 0-3 profile data, index 4 onwards is friends data (friend IDs)
                 sn.addNode(Integer.parseInt(splitData[0]), splitData[1], LocalDate.parse(splitData[2]), splitData[3]);
                 for(int i = 4; i< splitData.length; i++){
                     sn.addEdge(sn.getNodeFromID(Integer.parseInt(splitData[0])),sn.getNodeFromID(Integer.parseInt(splitData[i])));

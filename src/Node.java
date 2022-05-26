@@ -144,20 +144,6 @@ class Node implements NodeInteface,Comparable<Node>
         Node node = new Node(2, "Bob", LocalDate.parse("2022-02-23"), "Deakin");
         System.out.println(node.toString());
 
-        /*
-        File myFile = new File("data.txt");
-        Scanner sc = null;
-        try {
-            sc = new Scanner(myFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        while (sc.hasNextLine()) {
-            String data = sc.nextLine();
-            String[] splitData = data.split("\t|,|\\s"); //index 0-3 profile data, index 4 onwards is friends data
-            for (String[1])
-
-         */
         }
     }
 

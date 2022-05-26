@@ -87,9 +87,9 @@ public class Graph implements GraphInterface {
             out.append(person.getName()).append(" |\t"); //name |[tab]
             Collection<Edge> friends = person.getAdj().values();
             for (Edge bloke: friends) {
-                out.append("\t").append(bloke.getFriendName()); //name | friend1 friend2 friend3
+                out.append("\t").append(bloke.friend.getName()); //name | friend = friend1 friend2 friend3
             }
-            out.append(System.getProperty("line.separator"));
+            out.append(System.getProperty("line.separator")); //name | friend1  friend2  friend3
         }
         return out.toString();
     }

@@ -12,10 +12,6 @@ public class Edge
         return friend;
     }
 
-    public String getFriendName(){
-        return friend.getName();
-    }
-
     @Override
     public String toString() {
         return "friend = " + friend;
