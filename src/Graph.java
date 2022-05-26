@@ -64,6 +64,9 @@ public class Graph implements GraphInterface {
     @Override
     public void removeNode(Node node) {
         nodeList.remove(node.hashCode());
+        for (Edge edges : node.adj.values()) {
+            removeEdge(node, edges.getFriend());
+        }
     }
     @Override
     public Set<Edge> getNeighbors(Node node) {
@@ -81,10 +84,10 @@ public class Graph implements GraphInterface {
     public String toString(){
         StringBuilder out = new StringBuilder();
         for (Node person : nodeList.values()){
-            out.append(person.getName()).append(" | ");
+            out.append(person.getName()).append(" |\t"); //name |[tab]
             Collection<Edge> friends = person.getAdj().values();
             for (Edge bloke: friends) {
-                out.append(bloke.getFriendName());
+                out.append("\t").append(bloke.getFriendName()); //name | friend1 friend2 friend3
             }
             out.append(System.getProperty("line.separator"));
         }
