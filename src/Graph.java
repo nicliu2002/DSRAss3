@@ -67,7 +67,7 @@ public class Graph implements GraphInterface {
     @Override
     public void removeEdge(Node from, Node to)
     {
-        if (!nodeList.containsKey(from.getId()) || !nodeList.containsKey(to.getId())) // either adj (to and from) or NodeList
+        if (!nodeList.containsKey(from.getId()) || !nodeList.containsKey(to.getId()))
         {
             throw new NoSuchElementException("Edge does not exist");
         }
