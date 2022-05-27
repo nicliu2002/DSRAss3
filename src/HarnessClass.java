@@ -91,7 +91,7 @@ public class HarnessClass {
      */
     public static void testTask3() {
         Graph g = new Graph();
-        Node v0 = null, v1 = null, v2 = null, v3 = null, v4 = null, v5 = null, v6 = null;
+        Node v0 = null, v1 = null, v2 = null, v3 = null, v4 = null, v5 = null, v6 = null; // sets nodes to null
         // build a very simple graph, 
         try {
             // add more nodes to make your testing better
