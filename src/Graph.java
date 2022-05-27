@@ -1,16 +1,14 @@
 
+import javax.management.InstanceAlreadyExistsException;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 /**
  * constructs an undirected graph with some basic operations: addNode,
  * removeNode, addEdge, getNeighbors, etc.
  *
- * @author Saber Elsayed
+ * @author Tim McCrossin and Nicholas Liu (aka Chinese God)
  * @version 2.0, April 2022
  * @see Edge
  * @see Node
@@ -34,62 +32,101 @@ public class Graph implements GraphInterface {
     @Override
     public Node addNode(Integer id, String name, LocalDate dob, String suburb)
     {
-        Node newNode = new Node(id, name, dob, suburb);
-        nodeList.put(newNode.hashCode(), newNode); //we will implement some form of hashCode function later, rn it just pulls ID
+        Node newNode = null;
+       try {
+           newNode = new Node(id, name, dob, suburb);
+           Node s = nodeList.putIfAbsent(newNode.getId(), newNode);
+           if (s != null) {
+               throw new InstanceAlreadyExistsException("This node already exists");
+           } else {
+           }
+       } catch (Exception e)
+       {
+           System.out.println(e.getMessage());
+        }
         return newNode;
     }
 
     @Override
-    public void addEdge(Node from, Node to) {
+    public void addEdge(Node from, Node to)
+    {
         Edge e = new Edge(to);
-        if(!from.adj.containsValue(e)){
-            from.adj.put(to.hashCode(),e);  // from ---> to
+        if (!from.adj.containsValue(e)) {
+            from.adj.put(to.getId(), e);  // from ---> to
         } else {
             throw new IllegalArgumentException("edge exists already");
         }
         e = new Edge(from);
-        if (!to.adj.containsValue(e)){
-            to.adj.put(from.hashCode(),e);   // from <--- to
+        if (!to.adj.containsValue(e)) {
+            to.adj.put(from.getId(), e);   // from <--- to
         } else {
             throw new IllegalArgumentException("edge exists already");
         }
     }
 
     @Override
-    public void removeEdge(Node from, Node to) {
-        from.adj.remove(from.hashCode());
-        to.adj.remove(to.hashCode());
-    }
-
-    @Override
-    public void removeNode(Node node) {
-        nodeList.remove(node.hashCode());
-        for (Edge edges : node.adj.values()) {
-            removeEdge(node, edges.getFriend());
+    public void removeEdge(Node from, Node to)
+    {
+        if (!nodeList.containsKey(from.getId()) || !nodeList.containsKey(to.getId())) // either adj (to and from) or NodeList
+        {
+            throw new NoSuchElementException("Edge does not exist");
+        }
+        else
+        {
+            nodeList.get(from.getId()).adj.remove(to.getId());
+            nodeList.get(to.getId()).adj.remove(from.getId());
         }
     }
+
     @Override
-    public Set<Edge> getNeighbors(Node node) {
-        return (Set<Edge>)node.adj.values();
+    public void removeNode(Node node)
+    {
+        if (!nodeList.containsKey(node.getId()))
+        {
+            throw new IllegalArgumentException("This Node does not exists");
+        }
+        nodeList.remove(node.getId(), node);
+        for (int i =0; i< nodeList.size(); i++)
+        {
+            Edge temporary = new Edge(nodeList.get(i));
+            if (node.adj.containsValue(temporary))
+            {
+                removeEdge(node, nodeList.get(i));
+            }
+        }
     }
 
-    private int hashCode(int inputID){ //converts from ID to hashCode
+    @Override
+    public Set<Edge> getNeighbors(Node node)
+    {
+        if (!nodeList.containsKey(node.getId()))
+        {
+            throw new NoSuchElementException("Nodes are not in the graph!");
+        }
+        Set <Edge> neighbours = new HashSet<>(nodeList.get(node.getId()).adj.values());
+        return neighbours;
+    }
+
+
+    private int hashCode(int inputID) { //converts from ID to hashCode
         return inputID;
     }
 
-    public Node getNodeFromID(int id){
+    public Node getNodeFromID(int id) {
         return nodeList.get(hashCode(id));
     }
 
-    public String toString(){
+     
+
+    public String toString() {
         StringBuilder out = new StringBuilder();
         for (Node person : nodeList.values()){
-            out.append(person.getName()).append(" |\t"); //name |[tab]
+            out.append(person.getName()).append(" | ");
             Collection<Edge> friends = person.getAdj().values();
             for (Edge bloke: friends) {
-                out.append("\t").append(bloke.friend.getName()); //name | friend = friend1 friend2 friend3
+                //out.append(bloke.getFriendName()); // does not seem to be working
             }
-            out.append(System.getProperty("line.separator")); //name | friend1  friend2  friend3
+            out.append(System.getProperty("line.separator"));
         }
         return out.toString();
     }
