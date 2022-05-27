@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.*;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -113,6 +114,15 @@ class Node implements NodeInteface,Comparable<Node>
     }
 
     @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return id.equals(node.id) && name.equals(node.name) && dateOB.equals(node.dateOB) && suburb.equals(node.suburb) && Objects.equals(adj, node.adj);
+    }
+
+    /*
     /**
      * Indicates whether another object is "equal to" this one or not
      *
@@ -120,8 +130,9 @@ class Node implements NodeInteface,Comparable<Node>
      * @return true if this object is the same as the obj argument; false
      * otherwise.
      */
-
+/*
     public boolean equals(Object obj) {
+
         if (this == obj) {
             return true;
         }
@@ -136,7 +147,9 @@ class Node implements NodeInteface,Comparable<Node>
             return false;
         }
         return true;
-    }
+       }
+         */
+
 
 
     public static void main(String args[])

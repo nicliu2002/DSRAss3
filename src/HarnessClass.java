@@ -97,6 +97,8 @@ public class HarnessClass {
             // add more nodes to make your testing better
             v0 = g.addNode(0, "V0", LocalDate.parse("2010-10-30"), "A");
             v1 = g.addNode(1, "V1", LocalDate.parse("2010-10-30"), "B");
+            v2 = g.addNode(4, "Olive Rexley",	LocalDate.parse("1995-06-30"), "Weston Creek");
+            v3 = g.addNode(7,	"Elouise Clay",	LocalDate.parse("1998-07-26"), "Majura");
             System.out.print(g.nodeList.size() + "\t");
 
         } catch (Exception e) {
@@ -106,12 +108,14 @@ public class HarnessClass {
         // then edges between them
         try {
             g.addEdge(v0, v1);
+            System.out.println(v0.adj); // delete these values
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
         try {
             g.removeEdge(v0, v1);
+            System.out.println(v0.adj);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -119,6 +123,7 @@ public class HarnessClass {
         // add it back for more testing
         try {
             g.addEdge(v3, v2);
+            System.out.println(v3.adj);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -133,6 +138,7 @@ public class HarnessClass {
         //return to original -- add v1
         try {
             v1 = g.addNode(1, "V1", LocalDate.parse("2010-10-30"), "B");
+            System.out.println(v1);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

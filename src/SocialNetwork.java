@@ -10,7 +10,8 @@ import java.util.*;
  * @author Saber Elsayed
  * @version 2, April 2022
  */
-public class SocialNetwork implements SocialNetworkInterface {
+public class SocialNetwork implements SocialNetworkInterface
+{
 
     protected Graph sn;
 
@@ -90,7 +91,8 @@ public class SocialNetwork implements SocialNetworkInterface {
     }
 
     @Override
-    public List<String> getMutualFriends(Node x, Node y) { //could be sped up with hashcodes (like fucking minimally, just we can change it if its slow)
+    public List<String> getMutualFriends(Node x, Node y)
+    {
         Set<String> mutualFriends = new HashSet<>(); //stops double friend suggestions
         for (Edge i : sn.getNeighbors(x)) { //gets all the friends of x
             Node friend1 = i.getFriend();
