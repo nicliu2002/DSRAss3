@@ -99,7 +99,7 @@ public class HarnessClass {
             v1 = g.addNode(1, "V1", LocalDate.parse("2010-10-30"), "B");
             v2 = g.addNode(4, "Olive Rexley",	LocalDate.parse("1995-06-30"), "Weston Creek");
             v3 = g.addNode(7,	"Elouise Clay",	LocalDate.parse("1998-07-26"), "Majura");
-            System.out.print(g.nodeList.size() + "\t");
+            System.out.println(g.nodeList.size());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -169,7 +169,8 @@ public class HarnessClass {
         // test suggestFriends
         List<Node> friendsOffriends = new ArrayList<>();
         try {
-            friendsOffriends = driver.suggestFriends(driver.sn.nodeList.get(1));
+            friendsOffriends = driver.suggestFriends(driver.sn.nodeList.get(2));
+            System.out.println((friendsOffriends));
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -180,7 +181,7 @@ public class HarnessClass {
             List<String> actualMutual = new LinkedList<>();
             actualMutual = driver.getMutualFriends(driver.sn.nodeList.get(1),
                     driver.sn.nodeList.get(5));
-
+            System.out.println(actualMutual);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -191,6 +192,7 @@ public class HarnessClass {
                     + driver.remindBDEvents(driver.sn.nodeList.get(1)) + "\t");
 
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
 

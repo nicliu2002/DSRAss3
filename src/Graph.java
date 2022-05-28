@@ -127,7 +127,7 @@ public class Graph implements GraphInterface {
             out.append(person.getName()).append(" | ");
             Collection<Edge> friends = person.getAdj().values();
             for (Edge bloke: friends) {
-                //out.append(bloke.getFriendName()); // does not seem to be working
+                out.append(bloke.friend.getName()).append(", ");
             }
             out.append(System.getProperty("line.separator"));
         }

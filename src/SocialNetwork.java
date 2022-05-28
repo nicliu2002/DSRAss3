@@ -64,13 +64,12 @@ public class SocialNetwork implements SocialNetworkInterface {
 
     @Override
     public List<Node> suggestFriends(Node currentPerson) {
-        Set<Node> suggestFriends = new HashSet<>(); //stops double friend suggestions
-        List<Node> N = new ArrayList<Node>();
+        List<Node> N = new ArrayList<>();
         for (Edge i : sn.getNeighbors(currentPerson)) { //gets all the friends of currentPerson
             Node friend = i.getFriend();
             for (Edge j : sn.getNeighbors(friend)) { //gets all the friends of friend
                 Node possibleSuggest = j.getFriend();
-                if (possibleSuggest != friend && possibleSuggest.getSuburb() == currentPerson.getSuburb()){
+                if (!friend.equals(possibleSuggest) && possibleSuggest.getSuburb() == currentPerson.getSuburb() && !N.contains(possibleSuggest)){
                     //checks friend is not same friend + they live in the same suburb
                     N.add(possibleSuggest);
                 }
@@ -81,7 +80,7 @@ public class SocialNetwork implements SocialNetworkInterface {
 
     @Override
     public String remindBDEvents(Node currentPerson) {
-        Queue<Node> queue = new PriorityQueue<>();
+        PriorityQueue<Node> queue = new PriorityQueue<>();
         StringBuilder out = new StringBuilder();
         LocalDate today = LocalDate.now();
         out.append("Hey ").append(currentPerson.getName()).append(": \n");
@@ -89,7 +88,8 @@ public class SocialNetwork implements SocialNetworkInterface {
             Node friend = i.getFriend();
             queue.add(friend);
         }
-        for (Node person : queue){
+        while(!queue.isEmpty()){
+            Node person = queue.remove();
             LocalDate birthday = person.getDateOB();
             LocalDate nextBDay = birthday.withYear(today.getYear());
             if (nextBDay.isBefore(today) || nextBDay.isEqual(today)) {
@@ -104,13 +104,12 @@ public class SocialNetwork implements SocialNetworkInterface {
     @Override
     public List<String> getMutualFriends(Node x, Node y)
     {
-        Set<String> mutualFriends = new HashSet<>(); //stops double friend suggestions
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         for (Edge i : sn.getNeighbors(x)) { //gets all the friends of x
             Node friend1 = i.getFriend();
             for (Edge j : sn.getNeighbors(y)) { //gets all the friends of y
                 Node friend2 = i.getFriend();
-                if (friend1 == friend2) {
+                if (friend1 == friend2 && !list.contains(friend1.getName())) {
                     list.add(friend1.getName());
                 }
             }
