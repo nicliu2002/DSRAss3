@@ -154,11 +154,11 @@ public class HarnessClass {
     }
 
     public static void testSocialNetwork() {
-        SocialNetwork driver = null;
+        SocialNetwork driver = new SocialNetwork();
+        driver.processFile();
 
         // test reading data from file, toString 
         try {
-            driver = new SocialNetwork();
             System.out.println(driver.sn);
             Set<Edge> s = driver.sn.getNeighbors(driver.sn.nodeList.get(1));
 
